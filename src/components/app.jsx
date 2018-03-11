@@ -7,8 +7,10 @@ import Home from './home';
 import Dashboard from './protected/dashboard';
 import Profile from './protected/profile';
 import Products from './protected/products';
+import Contact from './protected/contact';
 import { logout } from './configurations/config';
 import { firebaseAuth } from './configurations/firebase';
+
 
 function PrivateRoute ({component: Component, authed, ...rest}) {
   return (
@@ -69,10 +71,16 @@ export default class App extends Component {
                   <Link to="/" className="navbar-brand">Home</Link>
                 </li>
                 <li>
+                  <Link to="/dashboard" className="navbar-brand">Dashboard</Link>
+                </li>
+                <li>
                   <Link to="/profile" className="navbar-brand">Profile</Link>
                 </li>
                 <li>
                   <Link to="/products" className="navbar-brand">Products</Link>
+                </li>
+                <li>
+                  <Link to="/contact" className="navbar-brand">Contact</Link>
                 </li>
                 <li>
                   {this.state.authed
@@ -99,6 +107,7 @@ export default class App extends Component {
                 <PrivateRoute authed={this.state.authed} path='/dashboard' component={Dashboard} />
                 <PrivateRoute authed={this.state.authed} path='/profile' component={Profile} />
                 <PrivateRoute authed={this.state.authed} path='/products' component={Products} />
+                <PublicRoute authed={this.state.authed} path='/contact' component={Contact} />
                 <Route render={() => <h3>No Match</h3>} />
               </Switch>
             </div>

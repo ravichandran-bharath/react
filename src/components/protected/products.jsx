@@ -24,19 +24,19 @@ export default class Products extends Component {
                         <div className="well">
                             <div className="row">
                                 <div className="col-md-3 portfolio-item">
-                                    <a href="#">
+                                    <a href="">
                                         <img className="img-responsive" src="images/Pro1.png" alt="Baripada Mixture" />
                                         <button onClick={this.buy.bind(this)} className="btn btn-default">Buy</button>
                                     </a>
                                 </div>
                                 <div className="col-md-3 portfolio-item">
-                                    <a href="#">
+                                    <a href="">
                                         <img className="img-responsive" src="images/Pro1.png" alt="Baripada Mixture" />
                                         <button onClick={this.buy.bind(this)} className="btn btn-default">Buy</button>
                                     </a>
                                 </div>
                                 <div className="col-md-3 portfolio-item">
-                                    <a href="#">
+                                    <a href="">
                                         <img className="img-responsive" src="images/Pro1.png" alt="Baripada Mixture" />
                                         <button onClick={this.buy.bind(this)} className="btn btn-default">Buy</button>
                                     </a>
