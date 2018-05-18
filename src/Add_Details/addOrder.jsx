@@ -1,19 +1,53 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Icon } from 'antd';
+import { Layout, Menu, Icon, Card } from 'antd';
 import {
   Link
 } from 'react-router-dom';
+import axios from 'axios';
+
+// import matchSorter from 'match-sorter'
+
+// Import React Table
+import ReactTable from "react-table";
+import "react-table/react-table.css";
 
 
 
 const SubMenu = Menu.SubMenu;
 const { Header, Content, Footer, Sider } = Layout;
 
-export default class Dashboard extends Component {
+export default class AddOrder extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+
+            orders: [],
+            data: []
+            
+        };
+    }
+
+    componentDidMount() {
+        axios.get("http://127.0.0.1:8000/fetchAllOrders",{
+        })
+        
+        .then((response)=>{
+            this.setState({
+                
+                orders : response.data,
+                data : response.data
+
+            });  
+        });    
+    }
+
+
   render () {
+    const { orders } = this.state;
     return (
       <div>
-        Dashboard. This is a protected route. You can only see this if you're authed.
+        AddOrder. This is a protected route. You can only see this if you're authed.
         <div>
           <h1>Home Component</h1>
           
@@ -33,8 +67,8 @@ export default class Dashboard extends Component {
                     >
                     <Menu.Item key="1">
                         <Icon type="file" />
-                            Admin Dashboard
-                        <Link to="/dashboard"></Link>
+                            Admin AddOrder
+                        <Link to="/AddOrder"></Link>
                     </Menu.Item>
                     <SubMenu key="sub1" title={<span><Icon type="bars" /><span>Store Master</span></span>}>
                         <Menu.Item key="2"><Link to="/addStores">Add Store</Link></Menu.Item>
@@ -110,7 +144,102 @@ export default class Dashboard extends Component {
 
                   <Content style={{ margin: '24px 16px 0' }}>
                       <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
-                          content
+                         Add Order content
+                        <Card>
+                            <div>
+                                <ReactTable
+                                data={orders}
+                                filterable
+                                defaultFilterMethod={(filter, row) =>
+                                    String(row[filter.id]) === filter.value}
+                                columns={[
+                                    {
+                                    columns: [
+                                        {
+                                        Header: "OrderID",
+                                        accessor: "orderId",
+                                        filterMethod: (filter, row) =>
+                                            row[filter.id].startsWith(filter.value) &&
+                                            row[filter.id].endsWith(filter.value)
+                                        },
+                                    ]
+                                    },
+                                    {
+                                    columns: [
+                                        {
+                                        Header: "Phone number",
+                                        accessor: "customerPhone",
+                                        filterMethod: (filter, row) =>
+                                            row[filter.id].startsWith(filter.value) &&
+                                            row[filter.id].endsWith(filter.value)
+                                        },
+                                    ]
+                                    },
+                                    {
+                                    columns: [
+                                        {
+                                        Header: "Date and Time",
+                                        accessor: "time",
+                                        filterMethod: (filter, row) =>
+                                            row[filter.id].startsWith(filter.value) &&
+                                            row[filter.id].endsWith(filter.value)
+                                        },
+                                    ]
+                                    },
+                                    {
+                                    columns: [
+                                        {
+                                        Header: "Total",
+                                        accessor: "total",
+                                        filterMethod: (filter, row) =>
+                                            row[filter.id].startsWith(filter.value) &&
+                                            row[filter.id].endsWith(filter.value)
+                                        },
+                                    ]
+                                    },
+                                    {
+                                    columns: [
+                                        {
+                                        Header: "Status",
+                                        accessor: "status"
+                                        },
+                                        {
+                                        Header: "status",
+                                        accessor: "status",
+                                        id: "status",
+                                        filterMethod: (filter, row) => {
+                                            if (filter.value === "all") {
+                                                row[filter.id].startsWith(filter.value) &&
+                                                row[filter.id].endsWith(filter.value)
+                                                return true;
+                                            }
+                                            
+                                        },
+                                        Filter: ({ filter, onChange }) =>
+                                            <select
+                                            onChange={event => onChange(event.target.value)}
+                                            style={{ width: "100%" }}
+                                            value={filter ? filter.value : "all"}
+                                            >
+                                                <option value="all">Show All</option>
+                                                <option value="pending">Pending</option>
+                                                <option value="accepted">Accepted</option>
+                                                <option value="rejected">Rejected</option>
+                                                <option value="cancelled">Cancelled</option>
+                                                <option value="delivered">Delivered</option>
+                                                <option value="completed">Completed</option>
+                                            </select>
+                                        }
+                                    ]
+                                    },
+                                    
+                                ]}
+                                defaultPageSize={10}
+                                className="-striped -highlight"
+                                />
+                                <br />
+                            </div>
+                         </Card>
                       </div>
                   </Content>
                   
